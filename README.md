@@ -2,6 +2,10 @@
 
 This project implements Assignment B with a strict backend-enforced workflow, role-based access control, and an audit trail.
 
+## Repository
+
+- GitHub: `https://github.com/WarrenNkomanga/workflow`
+
 ## Live Deployment
 
 - Frontend URL (Netlify): `https://workflow-warren.netlify.app`
