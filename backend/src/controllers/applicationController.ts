@@ -5,10 +5,12 @@ import {
   validateTransition,
 } from "../utils/stateMachine";
 import type {
+  ApplicationCategory,
   ApplicationStatus,
   TransitionAction,
   UserRole,
 } from "../types/domain";
+import { APPLICATION_CATEGORIES } from "../types/domain";
 
 type ApplicationRow = {
   id: string;
@@ -20,6 +22,23 @@ type ApplicationRow = {
   owner_id: string;
   created_at: string;
   updated_at: string;
+};
+
+const validCategories = new Set<string>(APPLICATION_CATEGORIES);
+
+const normalizeAndValidateCategory = (
+  category: string | undefined,
+): ApplicationCategory | null => {
+  if (!category) {
+    return null;
+  }
+
+  const normalized = category.trim().toUpperCase();
+  if (!validCategories.has(normalized)) {
+    return null;
+  }
+
+  return normalized as ApplicationCategory;
 };
 
 type AuditLogRow = {
@@ -74,10 +93,13 @@ export const createApplication = async (req: Request, res: Response): Promise<vo
       amount?: number;
     };
 
-    if (!title || !category || typeof amount !== "number" || amount <= 0) {
+    const normalizedCategory = normalizeAndValidateCategory(category);
+
+    if (!title || !normalizedCategory || typeof amount !== "number" || amount <= 0) {
       res.status(400).json({
         error: "Invalid payload",
-        detail: "title, category and a positive numeric amount are required.",
+        detail:
+          "title, category (GRANT/PROCUREMENT/LICENSING/RESEARCH/OPERATIONS) and a positive numeric amount are required.",
       });
       return;
     }
@@ -86,7 +108,7 @@ export const createApplication = async (req: Request, res: Response): Promise<vo
       `INSERT INTO applications (title, category, description, amount, status, owner_id)
        VALUES ($1, $2, $3, $4, 'DRAFT', $5)
        RETURNING *`,
-      [title.trim(), category.trim(), description?.trim() || null, amount, user.id],
+      [title.trim(), normalizedCategory, description?.trim() || null, amount, user.id],
     );
 
     res.status(201).json(result.rows[0]);
@@ -233,10 +255,13 @@ export const updateDraftApplication = async (
       amount?: number;
     };
 
-    if (!title || !category || typeof amount !== "number" || amount <= 0) {
+    const normalizedCategory = normalizeAndValidateCategory(category);
+
+    if (!title || !normalizedCategory || typeof amount !== "number" || amount <= 0) {
       res.status(400).json({
         error: "Invalid payload",
-        detail: "title, category and a positive numeric amount are required.",
+        detail:
+          "title, category (GRANT/PROCUREMENT/LICENSING/RESEARCH/OPERATIONS) and a positive numeric amount are required.",
       });
       return;
     }
@@ -280,7 +305,7 @@ export const updateDraftApplication = async (
            updated_at = CURRENT_TIMESTAMP
        WHERE id = $5
        RETURNING *`,
-      [title.trim(), category.trim(), description?.trim() || null, amount, id],
+      [title.trim(), normalizedCategory, description?.trim() || null, amount, id],
     );
 
     res.json(result.rows[0]);

@@ -1,5 +1,20 @@
 export type UserRole = "APPLICANT" | "REVIEWER";
 
+export type ApplicationCategory =
+  | "GRANT"
+  | "PROCUREMENT"
+  | "LICENSING"
+  | "RESEARCH"
+  | "OPERATIONS";
+
+export const APPLICATION_CATEGORIES: ApplicationCategory[] = [
+  "GRANT",
+  "PROCUREMENT",
+  "LICENSING",
+  "RESEARCH",
+  "OPERATIONS",
+];
+
 export type ApplicationStatus =
   | "DRAFT"
   | "SUBMITTED"

@@ -1,5 +1,6 @@
 import type {
   Application,
+  ApplicationCategory,
   ApplicationDetail,
   MockUser,
   TransitionAction,
@@ -68,7 +69,7 @@ export const createApplication = (
   user: MockUser,
   payload: {
     title: string;
-    category: string;
+    category: ApplicationCategory;
     description: string;
     amount: number;
   },
@@ -84,7 +85,7 @@ export const updateDraftApplication = (
   id: string,
   payload: {
     title: string;
-    category: string;
+    category: ApplicationCategory;
     description: string;
     amount: number;
   },

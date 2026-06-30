@@ -38,7 +38,7 @@ const createMockClient = (): MockClient => ({
 const sampleApplication = (status: ApplicationStatus) => ({
   id: "app-123",
   title: "Seed Application",
-  category: "Grants",
+  category: "GRANT",
   description: "desc",
   amount: "100.00",
   status,
@@ -68,7 +68,7 @@ describe("application routes integration", () => {
       .set(reviewerHeaders)
       .send({
         title: "Not allowed",
-        category: "General",
+        category: "GRANT",
         description: "x",
         amount: 99,
       });
@@ -114,7 +114,7 @@ describe("application routes integration", () => {
       .set(applicantHeaders)
       .send({
         title: "Updated Draft",
-        category: "Grants",
+        category: "GRANT",
         description: "updated",
         amount: 321,
       });
@@ -131,7 +131,7 @@ describe("application routes integration", () => {
       .set(applicantHeaders)
       .send({
         title: "Nope",
-        category: "Grants",
+        category: "GRANT",
         description: "updated",
         amount: 321,
       });
@@ -146,13 +146,29 @@ describe("application routes integration", () => {
       .set(reviewerHeaders)
       .send({
         title: "Nope",
-        category: "Grants",
+        category: "GRANT",
         description: "updated",
         amount: 321,
       });
 
     expect(response.status).toBe(403);
     expect(response.body.detail).toContain("Only applicants can edit draft");
+  });
+
+  it("rejects create payload with unsupported category", async () => {
+    const response = await request(app)
+      .post("/api/applications")
+      .set(applicantHeaders)
+      .send({
+        title: "Invalid category app",
+        category: "GENERAL",
+        description: "x",
+        amount: 99,
+      });
+
+    expect(response.status).toBe(400);
+    expect(response.body.detail).toContain("category");
+    expect(queryMock).not.toHaveBeenCalled();
   });
 
   it("rolls back transaction when transition validation fails", async () => {

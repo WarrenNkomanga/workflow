@@ -38,6 +38,16 @@ Reviewer access does not require signup. Use the role switch in the UI:
 - `REJECT` and `RETURN_FOR_CHANGES` require comment.
 - Every transition writes an `application_audit_logs` record.
 
+## Application Categories
+
+The application form uses a fixed category list (frontend dropdown and backend validation):
+
+- `GRANT`
+- `PROCUREMENT`
+- `LICENSING`
+- `RESEARCH`
+- `OPERATIONS`
+
 ## Run With Docker (DB + Backend)
 
 From repository root:

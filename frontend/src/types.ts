@@ -1,5 +1,20 @@
 export type UserRole = "APPLICANT" | "REVIEWER";
 
+export type ApplicationCategory =
+  | "GRANT"
+  | "PROCUREMENT"
+  | "LICENSING"
+  | "RESEARCH"
+  | "OPERATIONS";
+
+export const APPLICATION_CATEGORIES: ApplicationCategory[] = [
+  "GRANT",
+  "PROCUREMENT",
+  "LICENSING",
+  "RESEARCH",
+  "OPERATIONS",
+];
+
 export type ApplicationStatus =
   | "DRAFT"
   | "SUBMITTED"
@@ -24,7 +39,7 @@ export interface MockUser {
 export interface Application {
   id: string;
   title: string;
-  category: string;
+  category: ApplicationCategory;
   description: string | null;
   amount: string;
   status: ApplicationStatus;

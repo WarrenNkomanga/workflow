@@ -4,7 +4,12 @@ import {
   transitionApplication,
   updateDraftApplication,
 } from "../api";
-import type { Application, MockUser } from "../types";
+import {
+  APPLICATION_CATEGORIES,
+  type Application,
+  type ApplicationCategory,
+  type MockUser,
+} from "../types";
 import StatusBadge from "./StatusBadge";
 
 interface ApplicantDashboardProps {
@@ -25,7 +30,7 @@ export default function ApplicantDashboard({
   const [isCreateOpen, setCreateOpen] = useState(false);
   const [isSaving, setSaving] = useState(false);
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState<ApplicationCategory>("GRANT");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -37,7 +42,7 @@ export default function ApplicantDashboard({
 
   const resetForm = () => {
     setTitle("");
-    setCategory("");
+    setCategory("GRANT");
     setDescription("");
     setAmount("");
     setEditingId(null);
@@ -62,7 +67,7 @@ export default function ApplicantDashboard({
       setSaving(true);
       const payload = {
         title: title.trim(),
-        category: category.trim() || "General",
+        category,
         description: description.trim(),
         amount: Number(amount),
       };
@@ -180,13 +185,18 @@ export default function ApplicantDashboard({
                 disabled={isSaving}
                 onChange={(event) => setTitle(event.target.value)}
               />
-              <input
+              <select
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
-                placeholder="Category"
                 value={category}
                 disabled={isSaving}
-                onChange={(event) => setCategory(event.target.value)}
-              />
+                onChange={(event) => setCategory(event.target.value as ApplicationCategory)}
+              >
+                {APPLICATION_CATEGORIES.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
               <textarea
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
                 rows={4}
