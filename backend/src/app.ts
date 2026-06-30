@@ -13,11 +13,12 @@ app.use(
   }),
 );
 app.use(express.json());
-app.use(mockAuth);
-app.use("/api", applicationRoutes);
 
 app.get("/health", (_req, res) => {
   res.json({ ok: true });
 });
+
+app.use(mockAuth);
+app.use("/api", applicationRoutes);
 
 export default app;
