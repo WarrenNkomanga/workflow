@@ -123,8 +123,8 @@ npm run dev
 
 Frontend role switch injects seeded UUID headers:
 
-- Alice: `361a89a7-787d-4276-ba6d-fa37ed6dd466`
-- Bob: `51ec1470-a403-4f5c-ac49-d523ae9ec275`
+- Alice: `a80a1c7f-cb4d-4e87-84eb-4997d4456b3f`
+- Bob: `ecb36047-6061-4d85-a5bc-e11d54e08add`
 
 These are passed as mock headers by the frontend role switch:
 

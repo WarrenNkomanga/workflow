@@ -10,13 +10,13 @@ const users: MockUser[] = [
   {
     key: "alice",
     label: "Alice (Applicant)",
-    id: "361a89a7-787d-4276-ba6d-fa37ed6dd466",
+    id: "a80a1c7f-cb4d-4e87-84eb-4997d4456b3f",
     role: "APPLICANT",
   },
   {
     key: "bob",
     label: "Bob (Reviewer)",
-    id: "51ec1470-a403-4f5c-ac49-d523ae9ec275",
+    id: "ecb36047-6061-4d85-a5bc-e11d54e08add",
     role: "REVIEWER",
   },
 ];
