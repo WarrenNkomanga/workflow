@@ -4,9 +4,9 @@ This project implements Assignment B with a strict backend-enforced workflow, ro
 
 ## Live Deployment
 
-- Frontend URL (Netlify): `ADD_FRONTEND_URL_HERE`
-- Backend URL (Render): `ADD_BACKEND_URL_HERE`
-- Health endpoint: `ADD_BACKEND_URL_HERE/health`
+- Frontend URL (Netlify): `https://workflow-warren.netlify.app`
+- Backend URL (Render): `https://workflow-klij.onrender.com`
+- Health endpoint: `https://workflow-klij.onrender.com/health`
 
 Reviewer access does not require signup. Use the role switch in the UI:
 
