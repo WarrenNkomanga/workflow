@@ -4,8 +4,14 @@ import applicationRoutes from "./routes/applicationRoutes";
 import { mockAuth } from "./utils/auth";
 
 const app = express();
+const frontendOrigin = process.env.FRONTEND_ORIGIN;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: frontendOrigin || true,
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(mockAuth);
 app.use("/api", applicationRoutes);

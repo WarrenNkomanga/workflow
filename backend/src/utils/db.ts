@@ -1,6 +1,7 @@
 import { Pool, type QueryResult, type QueryResultRow } from "pg";
 
 const connectionString =
+  process.env.DATABASE_URL ||
   "postgresql://postgres:supersecretpassword@localhost:5432/workflow_assessment";
 
 export const pool = new Pool({
