@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: workflow-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: supersecretpassword
+      POSTGRES_DB: workflow_assessment
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/sql/001_init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+
+  backend:
+    build:
+      context: ./backend
+    container_name: workflow-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://postgres:supersecretpassword@db:5432/workflow_assessment
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
